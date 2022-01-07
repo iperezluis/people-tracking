@@ -1,14 +1,27 @@
-import React from 'react';
+import React, {useContext} from 'react';
 
 import {createStackNavigator} from '@react-navigation/stack';
-import {HomeScreen} from '../src/screens/HomeScreen';
+import MapScreen from '../src/pages/MapScreen';
+import PermisionScreen from '../src/pages/PermisionScreen';
+import {PermissionContext} from '../src/context/permissionContext';
+import LoadingScreen from '../src/pages/LoadingScreen';
 
 const Stack = createStackNavigator();
 
 export const Navigator = () => {
+  const {permission} = useContext(PermissionContext);
+  if (permission.locationStatus === 'unavailable') {
+    return <LoadingScreen />;
+  }
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name="Home" component={HomeScreen} />
+    <Stack.Navigator
+      initialRouteName="PermissionScreen"
+      screenOptions={{headerShown: false}}>
+      {permission.locationStatus === 'granted' ? (
+        <Stack.Screen name="MapScreen" component={MapScreen} />
+      ) : (
+        <Stack.Screen name="PermissionScreen" component={PermisionScreen} />
+      )}
     </Stack.Navigator>
   );
 };

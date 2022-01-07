@@ -10,7 +10,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "ReactComponents";
+    return "RutasApp";
   }
   @Override
 protected void onCreate(Bundle savedInstanceState) {
